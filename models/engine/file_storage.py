@@ -32,6 +32,7 @@ class FileStorage:
         """Adds new object to storage dictionary"""
         if obj:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
+<<<<<<< HEAD
             FileStorage.__objects[key] = obj
 
     def save(self):
@@ -65,6 +66,7 @@ class FileStorage:
                     'Review': Review
                   }
         try:
+<<<<<<< HEAD
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
