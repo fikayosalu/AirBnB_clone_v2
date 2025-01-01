@@ -12,30 +12,28 @@ class BaseModel:
     """A base class for all hbnb models"""
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
+        from models import storage
+        self.id = kwargs.get('id') if 'id' in kwargs else str(uuid.uuid4())
+        self.created_at = datetime.fromisoformat(kwargs.get('created_at')) \
+            if 'created_at' in kwargs else datetime.now()
+        self.updated_at = datetime.fromisoformat(kwargs.get('updated_at')) \
+            if 'updated_at' in kwargs else datetime.now()
+        storage.new(self)
         """
-        if kwargs:
-            for key, value in kwargs.items():
-                if key in ('created_at', 'updated_at'):
-                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
-                else:
-                    setattr(self, key, value)
-
-            # Ensure 'id' is set even if not provided in kwargs
-            self.id = kwargs.get('id', str(uuid.uuid4()))
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
-        """
-        if not kwargs:
-            self.id = Column(String(60), nullable=False, primary_key=True)
-            self.created_at = Column(datetime.utcnow(), nullable=False)
-            self.updated_at = Column(datetime.utcnow(), nullable=False)
-        else:
-            for key, value in kwargs.items():
-                self.key = value
+            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
+            if len(kwargs) > 0:
+                for attr, value in kwargs.items():
+                    if attr != "__class__":
+                        if attr == 'created_at' or attr == 'updated_at':
+                            setattr(self, attr, datetime.fromisoformat(value))
+                        else:
+                            setattr(self, attr, value)
+            """
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -46,7 +44,6 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
-        storage.new()
         storage.save()
 
     def to_dict(self):
@@ -57,10 +54,4 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if '_sa_instance_state' in dictionary:
-            del dictionary['_sa_instance_state']
         return dictionary
-
-    def delete(self):
-        """Delete the current instance from the storage"""
-
