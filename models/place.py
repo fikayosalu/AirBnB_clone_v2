@@ -35,6 +35,10 @@ class Place(BaseModel, Base):
             )
 
     if storage_type == "db":
+        reviews = relatgionship(
+                "Review", backref="place", cascade="all, delete-orphan"
+                )
+
         amenities = relationship(
             'Amenity',
             secondary='place_amenity',
@@ -43,6 +47,10 @@ class Place(BaseModel, Base):
         )
     else:
         # For FileStorage, use a list to story Amenity IDs
+        @property
+        def reviews:
+            return [review for obj in self.reviews]
+
         @property
         def amenities(self):
             """Getter for amenities"""
@@ -61,7 +69,3 @@ class Place(BaseModel, Base):
             if isinstance(obj, Amenity):
                 if obj.id not in self.amenity_ids:
                     self.amenity_ids.append(obj.id)
-
-    @property
-    def reviews(self):
-        return [review for obj in self.reviews]
