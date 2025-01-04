@@ -35,7 +35,7 @@ class Place(BaseModel, Base):
             )
 
     if storage_type == "db":
-        reviews = relatgionship(
+        reviews = relationship(
                 "Review", backref="place", cascade="all, delete-orphan"
                 )
 
@@ -48,7 +48,7 @@ class Place(BaseModel, Base):
     else:
         # For FileStorage, use a list to story Amenity IDs
         @property
-        def reviews:
+        def reviews(self):
             return [review for obj in self.reviews]
 
         @property
