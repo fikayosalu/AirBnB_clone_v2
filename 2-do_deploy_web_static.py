@@ -7,7 +7,7 @@ import os
 
 
 # Define the web servers
-env.hosts = [35.174.185.171, 54.160.109.229]
+env.hosts = ['35.174.185.171', '54.160.109.229']
 
 
 def do_pack():
