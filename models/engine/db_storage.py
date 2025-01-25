@@ -13,6 +13,7 @@ from models.place import Place
 from models.user import User
 from models.review import Review
 from models.base_model import Base
+from models.place import place_amenity
 
 user = os.getenv('HBNB_MYSQL_USER')
 password = os.getenv('HBNB_MYSQL_PWD')

@@ -22,12 +22,13 @@ class test_fileStorage(unittest.TestCase):
         self.storage.save()
 
     def tearDown(self):
-        """ Remove storage file at end of tests """
+        """ Remove storage file at end of tests
         try:
             os.remove('file.json')
         except FileNotFoundError:
             pass
         del self.storage
+        """
 
     def test_obj_list_empty(self):
         """ __objects is initially empty """

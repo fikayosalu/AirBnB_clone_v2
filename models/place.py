@@ -7,7 +7,7 @@ from models.amenity import Amenity
 from models import storage_type
 
 
-place_amenities = Table(
+place_amenity = Table(
     'place_amenity',
     Base.metadata,
     Column('place_id', String(60), ForeignKey('places.id'),
@@ -40,11 +40,11 @@ class Place(BaseModel, Base):
                 )
 
         amenities = relationship(
-            'Amenity',
-            secondary='place_amenity',
-            viewonly=False,
-            back_populates='place_amenities'
-        )
+                'Amenity',
+                secondary='place_amenity',
+                viewonly=False,
+                back_populates='place_amenities'
+    )
     else:
         # For FileStorage, use a list to story Amenity IDs
         @property
