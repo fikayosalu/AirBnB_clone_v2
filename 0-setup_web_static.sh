@@ -20,11 +20,11 @@ sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 
 # Update Nginx configuration
-sudo sed -i '54a\
-	location ^~ /hbnb_static{\
-		alias /data/web_static/current/\
-		try_files $uri $uri/ =404;\
-	}' /etc/nginx/sites-available/default
+sudo sed -i "54a\\
+	location ^~ /hbnb_static{\\
+		alias /data/web_static/current/\\
+		try_files $uri $uri/ =404;\\
+	}" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes
 sudo service nginx restart
