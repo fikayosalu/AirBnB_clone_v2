@@ -21,7 +21,7 @@ sudo chown -R ubuntu:ubuntu /data/
 
 # Update Nginx configuration
 sudo sed -i "54a\\
-	location ^~ /hbnb_static {\\
+	location /hbnb_static/ {\\
 		alias /data/web_static/current/\\
 	}" /etc/nginx/sites-available/default
 
