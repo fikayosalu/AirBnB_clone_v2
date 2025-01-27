@@ -30,7 +30,7 @@ if ! grep -q "hbnb_static" /etc/nginx/sites-available/default; then
 fi
 
 # Restart Nginx to apply changes
-sudo systemctl restart nginx
+sudo service nginx restart
 
 echo "Setup complete! Web static content is now available at /hbnb_static/"
 
