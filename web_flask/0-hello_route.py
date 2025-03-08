@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 """ 0-hello_route module
 A script that starts a Flask web application
 """
